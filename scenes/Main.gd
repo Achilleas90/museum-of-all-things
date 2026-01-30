@@ -126,26 +126,31 @@ func _close_menus():
   $CanvasLayer/MainMenu.visible = false
   $CanvasLayer/PauseMenu.visible = false
   $CanvasLayer/PopupTerminalMenu.visible = false
+  $CrosshairLayer/CrosshairDot.visible = true
 
 func _open_settings_menu():
   _close_menus()
   $CanvasLayer.visible = true
   $CanvasLayer/Settings.visible = true
+  $CrosshairLayer/CrosshairDot.visible = false
 
 func _open_main_menu():
   _close_menus()
   $CanvasLayer.visible = true
   $CanvasLayer/MainMenu.visible = true
+  $CrosshairLayer/CrosshairDot.visible = false
 
 func _open_pause_menu():
   _close_menus()
   $CanvasLayer.visible = true
   $CanvasLayer/PauseMenu.visible = true
+  $CrosshairLayer/CrosshairDot.visible = false
 
 func _open_terminal_menu():
   _close_menus()
   $CanvasLayer.visible = true
   $CanvasLayer/PopupTerminalMenu.visible = true
+  $CrosshairLayer/CrosshairDot.visible = false
 
 func _on_main_menu_start_pressed():
   _start_game()

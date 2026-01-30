@@ -23,6 +23,9 @@ var _joy_right_y = JOY_AXIS_RIGHT_Y
 @export var max_speed_walk = 5
 @export var max_speed_dash = 10
 @export var max_speed = max_speed_walk
+@export var time_to_max_speed = 0.25
+@export var time_to_stop = 0.2
+@export var input_deadzone = 0.15
 
 var _invert_y = false
 var _mouse_sensitivity_factor = 1.0
@@ -64,6 +67,8 @@ func get_input_dir():
   return input_dir.normalized()
 
 var camera_v = Vector2.ZERO
+var min_pitch = deg_to_rad(-90.0)
+var max_pitch = deg_to_rad(90.0)
 func _unhandled_input(event):
   if not _enabled:
     return
@@ -76,7 +81,7 @@ func _unhandled_input(event):
     if not smooth_movement:
       rotate_y(delta_x)
       $Pivot.rotate_x(delta_y)
-      $Pivot.rotation.x = clamp($Pivot.rotation.x, -1.2, 1.2)
+      $Pivot.rotation.x = clamp($Pivot.rotation.x, min_pitch, max_pitch)
     else:
       camera_v += Vector2(
         clamp(delta_y, -dampening, dampening),
@@ -99,11 +104,30 @@ func _physics_process(delta):
     max_speed = max_speed_walk
 
   var speed = max_speed if fully_standing else crouch_move_speed
-  var input = Input.get_vector("strafe_left", "strafe_right", "move_forward", "move_back")
-  var desired_velocity = transform.basis * Vector3(input.x, 0, input.y) * speed
-
-  velocity.x = desired_velocity.x
-  velocity.z = desired_velocity.z
+  var input := Vector2.ZERO
+  var keyboard_move = Input.is_action_pressed("strafe_left") \
+    or Input.is_action_pressed("strafe_right") \
+    or Input.is_action_pressed("move_forward") \
+    or Input.is_action_pressed("move_back")
+  if keyboard_move:
+    input.x = (1.0 if Input.is_action_pressed("strafe_right") else 0.0) - (1.0 if Input.is_action_pressed("strafe_left") else 0.0)
+    input.y = (1.0 if Input.is_action_pressed("move_back") else 0.0) - (1.0 if Input.is_action_pressed("move_forward") else 0.0)
+    input = input.normalized()
+  else:
+    input = Input.get_vector("strafe_left", "strafe_right", "move_forward", "move_back", input_deadzone)
+  var basis := global_transform.basis
+  var forward := -basis.z
+  forward.y = 0.0
+  forward = forward.normalized()
+  var right := basis.x
+  right.y = 0.0
+  right = right.normalized()
+  var desired_velocity = (right * input.x + forward * -input.y) * speed
+  var accel_time = max(time_to_max_speed, 0.001)
+  var decel_time = max(time_to_stop, 0.001)
+  var accel_rate = speed / accel_time if input.length() > 0.0 else speed / decel_time
+  velocity.x = move_toward(velocity.x, desired_velocity.x, accel_rate * delta)
+  velocity.z = move_toward(velocity.z, desired_velocity.z, accel_rate * delta)
   set_up_direction(Vector3.UP)
   set_floor_stop_on_slope_enabled(true)
   move_and_slide()
@@ -113,12 +137,12 @@ func _physics_process(delta):
   if delta_vec.length() > joy_deadzone:
     rotate_y(delta_vec.x * joy_sensitivity)
     $Pivot.rotate_x(delta_vec.y * joy_sensitivity)
-    $Pivot.rotation.x = clamp($Pivot.rotation.x, -1.2, 1.2)
+    $Pivot.rotation.x = clamp($Pivot.rotation.x, min_pitch, max_pitch)
 
   if smooth_movement:
     rotate_y(camera_v.y)
     $Pivot.rotate_x(camera_v.x)
-    $Pivot.rotation.x = clamp($Pivot.rotation.x, -1.2, 1.2)
+    $Pivot.rotation.x = clamp($Pivot.rotation.x, min_pitch, max_pitch)
     camera_v *= 0.95
 
   $FootstepPlayer.set_on_floor(is_on_floor())

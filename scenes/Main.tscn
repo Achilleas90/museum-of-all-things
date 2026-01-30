@@ -50,6 +50,22 @@ visible = false
 [node name="PopupTerminalMenu" parent="CanvasLayer" unique_id=153586201 instance=ExtResource("6_cjdwp")]
 visible = false
 
+[node name="CrosshairLayer" type="CanvasLayer" parent="." unique_id=822013211]
+
+[node name="CrosshairDot" type="ColorRect" parent="CrosshairLayer" unique_id=2031319558]
+z_index = 10
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+color = Color(1, 1, 1, 0.9)
+mouse_filter = 1
+
 [node name="FpsLabel" type="Label" parent="." unique_id=903937178]
 visible = false
 z_index = 1
