@@ -16,7 +16,11 @@ func _ready() -> void:
     %Quit.visible = false
 
 func _on_visibility_changed():
-  if visible:
+  if visible and is_inside_tree():
+    call_deferred("_grab_start_focus")
+
+func _grab_start_focus() -> void:
+  if visible and is_inside_tree():
     $MarginContainer/VBoxContainer/Start.grab_focus()
 
 func set_webxr_enabled(p_enabled):
@@ -44,5 +48,5 @@ func _on_quit_button_pressed():
   get_tree().quit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
   pass

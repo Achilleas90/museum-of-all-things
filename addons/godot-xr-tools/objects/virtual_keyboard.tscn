@@ -8,6 +8,7 @@ resource_local_to_scene = true
 size = Vector2(1.5, 0.75)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ncnoj"]
+viewport_path = NodePath("Viewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kjc12"]
 cull_mode = 2

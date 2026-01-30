@@ -1,11 +1,18 @@
 extends Node
 
+@warning_ignore("unused_signal")
 signal search_complete(title, context)
+@warning_ignore("unused_signal")
 signal random_complete(title, context)
+@warning_ignore("unused_signal")
 signal wikitext_complete(titles, context)
+@warning_ignore("unused_signal")
 signal wikitext_failed(titles, message)
+@warning_ignore("unused_signal")
 signal wikidata_complete(ids, context)
+@warning_ignore("unused_signal")
 signal images_complete(files, context)
+@warning_ignore("unused_signal")
 signal commons_images_complete(category, context)
 
 const MAX_BATCH_SIZE = 50
@@ -54,7 +61,7 @@ func _network_request_thread_loop():
   while not WorkQueue.get_quitting():
     _network_request_item()
 
-func _process(delta: float):
+func _process(_delta: float):
   if not Util.is_using_threads():
     _network_request_item()
 
@@ -299,7 +306,7 @@ func _on_request_completed_wrapper(result, response_code, headers, body, ctx, ca
   if _on_request_completed(result, response_code, headers, body, ctx, caller_ctx):
     _delayed_advance_queue()
 
-func _on_request_completed(result, response_code, headers, body, ctx, caller_ctx):
+func _on_request_completed(result, response_code, _headers, body, ctx, caller_ctx):
   if result != 0 or response_code != 200:
     if response_code != 404:
       push_error("error in request ", result, " ", response_code, " ", ctx.url)
@@ -494,7 +501,7 @@ func _on_wikidata_request_complete(res, ctx, caller_ctx):
   call_deferred("emit_signal", "wikidata_complete", ctx.entity, caller_ctx)
   return true
 
-func _on_search_request_complete(res, ctx, caller_ctx):
+func _on_search_request_complete(res, _ctx, caller_ctx):
   if res.query.has("search"):
     if len(res.query.search) > 0:
       var result_title = res.query.search[0].title
@@ -503,7 +510,7 @@ func _on_search_request_complete(res, ctx, caller_ctx):
   call_deferred("emit_signal", "search_complete", null, caller_ctx)
   return true
 
-func _on_random_request_complete(res, ctx, caller_ctx):
+func _on_random_request_complete(res, _ctx, caller_ctx):
   if res.query.has("pages"):
     var pages = res.query.pages
     for page_id in pages.keys():

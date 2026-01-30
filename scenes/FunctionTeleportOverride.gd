@@ -109,8 +109,8 @@ var player : Node3D
 
 
 # Add support for is_xr_class on XRTools classes
-func is_xr_class(name : String) -> bool:
-  return name == "XRToolsFunctionTeleport"
+func is_xr_class(class_name_str : String) -> bool:
+  return class_name_str == "XRToolsFunctionTeleport"
 
 
 # Called when the node enters the scene tree for the first time.

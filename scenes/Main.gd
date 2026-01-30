@@ -202,7 +202,7 @@ func _input(event):
       Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
   $FpsLabel.text = str(Engine.get_frames_per_second())
 
 func _webxr_session_supported(session_mode, supported):

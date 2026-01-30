@@ -62,10 +62,10 @@ static func valid_hall_types(grid, hall_start, hall_dir):
   var past_hall_exit_right = hall_corner + 2 * hall_dir_right
 
   var hall_dir_left = hall_dir.rotated(Vector3.UP, PI / 2)
-  var hall_exit_left = hall_corner + hall_dir_left
-  var past_hall_exit_left = hall_corner + 2 * hall_dir_left
+  var _hall_exit_left = hall_corner + hall_dir_left
+  var _past_hall_exit_left = hall_corner + 2 * hall_dir_left
 
-  var corner_cell_down = grid.get_cell_item(hall_corner - Vector3.UP)
+  var _corner_cell_down = grid.get_cell_item(hall_corner - Vector3.UP)
   var corner_empty_neighbors = Util.cell_neighbors(grid, hall_corner - Vector3.UP, -1)
 
   if (
@@ -145,8 +145,8 @@ func create_curve_hall(hall_start, hall_dir, is_right=true, level=FLAT):
     _grid.set_cell_item(exit_hall + Vector3.UP, -1, 0)
     to_pos = exit_hall - Vector3.UP
 
-func init(grid, from_title, to_title, hall_start, hall_dir, _hall_type=[true, FLAT]):
-  floor_type = Util.gen_floor(from_title)
+func init(grid, from_title_text, to_title_text, hall_start, hall_dir, _hall_type=[true, FLAT]):
+  floor_type = Util.gen_floor(from_title_text)
   position = Util.gridToWorld(hall_start)
   loader.monitoring = true
 
@@ -166,13 +166,13 @@ func init(grid, from_title, to_title, hall_start, hall_dir, _hall_type=[true, FL
   from_sign.position = Util.gridToWorld(to_pos + to_dir * 0.65) - position
   from_sign.position += to_dir.rotated(Vector3.UP, PI / 2).normalized() * 1.5
   from_sign.rotation.y = Util.vecToRot(to_dir) + PI
-  from_sign.text = from_title
+  from_sign.text = from_title_text
   from_sign.visible = false
 
   to_sign.position = Util.gridToWorld(hall_start - hall_dir * 0.60) - position
   to_sign.position -= hall_dir.rotated(Vector3.UP, PI / 2).normalized() * 1.5
   to_sign.rotation.y = Util.vecToRot(hall_dir)
-  to_sign.text = to_title
+  to_sign.text = to_title_text
 
   entry_door.position = Util.gridToWorld(from_pos) - 1.9 * from_dir - position
   entry_door.rotation.y = Util.vecToRot(from_dir) + PI

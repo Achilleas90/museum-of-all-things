@@ -78,9 +78,7 @@ func _get_cache_size_os_agnostic():
 
   var file = dir.get_next()
   var total_length = 0
-  var count = 0
   while file:
-    count += 1
     var handle = FileAccess.open(cache_dir + file, FileAccess.READ)
     if handle:
       total_length += handle.get_length()

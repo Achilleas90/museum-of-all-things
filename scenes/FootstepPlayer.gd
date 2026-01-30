@@ -66,7 +66,6 @@ var _floor_material_map = {
 
 var _on_floor = false
 var _distance_from_last_step = 0.0
-var _step_idx = 0
 var _last_in_water = false
 var _last_on_floor = false
 @onready var _last_position = global_position
@@ -77,7 +76,7 @@ func _ready() -> void:
 func set_on_floor(on_floor):
   _on_floor = on_floor
 
-func _physics_process(delta):
+func _physics_process(_delta):
   var step = (global_position - _last_position).length()
   _last_position = global_position
 

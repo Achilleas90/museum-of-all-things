@@ -1,5 +1,6 @@
 extends Node
 
+@warning_ignore("unused_signal")
 signal items_complete
 
 var ignore_sections = [
@@ -68,7 +69,7 @@ func _processor_thread_loop():
   while not WorkQueue.get_quitting():
     _processor_thread_item()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
   if not Util.is_using_threads():
     _processor_thread_item()
 
@@ -77,9 +78,9 @@ func _processor_thread_item():
     if item:
       _create_items(item[0], item[1], item[2])
 
-func _seeded_shuffle(seed, arr, bias=false):
+func _seeded_shuffle(seed_value, arr, bias=false):
   var rng = RandomNumberGenerator.new()
-  rng.seed = hash(seed)
+  rng.seed = hash(seed_value)
   if not bias:
     Util.shuffle(rng, arr)
   else:

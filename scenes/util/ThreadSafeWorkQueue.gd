@@ -28,26 +28,26 @@ func get_current_exhibit():
   _current_exhibit_lock.unlock()
   return res
 
-func setup_queue(name, frame_pacing=DEFAULT_FRAME_PACING):
-  _queue_map[name] = {
+func setup_queue(queue_name, frame_pacing=DEFAULT_FRAME_PACING):
+  _queue_map[queue_name] = {
     "exhibit_queues": {},
     "lock": Mutex.new(),
     "last_frame_with_item": 0,
     "frame_pacing": frame_pacing,
   }
 
-func _get_queue(name):
+func _get_queue(queue_name):
   var res
   _global_queue_lock.lock()
-  if not _queue_map.has(name):
-    setup_queue(name)
-  res = _queue_map[name]
+  if not _queue_map.has(queue_name):
+    setup_queue(queue_name)
+  res = _queue_map[queue_name]
   _global_queue_lock.unlock()
   return res
 
-func add_item(name, item, _exhibit=null, front=false):
+func add_item(queue_name, item, _exhibit=null, front=false):
   var exhibit = _exhibit if _exhibit else get_current_exhibit()
-  var queue = _get_queue(name)
+  var queue = _get_queue(queue_name)
 
   queue.lock.lock()
   if not queue.exhibit_queues.has(exhibit):
@@ -59,8 +59,8 @@ func add_item(name, item, _exhibit=null, front=false):
     queue.exhibit_queues[exhibit].append(item)
   queue.lock.unlock()
 
-func process_queue(name):
-  var queue = _get_queue(name)
+func process_queue(queue_name):
+  var queue = _get_queue(queue_name)
 
   if Util.is_using_threads():
     while not _quitting:

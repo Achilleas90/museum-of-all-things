@@ -24,30 +24,30 @@ func _ready() -> void:
   var random = RandomNumberGenerator.new()
   random.randomize()
 
-  var last_origin
-  var leaves_in_plant
+  var last_origin = null
+  var leaves_in_plant = max_leaves_per_plant + 1
 
   for i in range(instance_count):
-    var transform = Transform3D()
+    var xform = Transform3D()
 
     if last_origin and leaves_in_plant <= max_leaves_per_plant:
-      transform.origin = last_origin
+      xform.origin = last_origin
       leaves_in_plant += 1
     else:
       leaves_in_plant = 0
-      transform.origin = Vector3(
+      xform.origin = Vector3(
         random.randf_range(-area_size.x / 2, area_size.x / 2),
         random.randf_range(-area_size.y / 2, area_size.y / 2),
         random.randf_range(-area_size.z / 2, area_size.z / 2)
       )
-      last_origin = transform.origin
+      last_origin = xform.origin
 
-    transform.basis = Basis().rotated(Vector3.UP, random.randf_range(0, TAU))
-    transform.basis = transform.basis.rotated(
+    xform.basis = Basis().rotated(Vector3.UP, random.randf_range(0, TAU))
+    xform.basis = xform.basis.rotated(
       Vector3.RIGHT,
       random.randf_range(-PI / 4, PI / 4))
 
     var scale_factor = random.randf_range(min_leaf_scale, max_leaf_scale)
-    transform = transform.scaled(Vector3.ONE * scale_factor)
-    transform.origin *= 1 / scale_factor
-    multimesh.set_instance_transform(i, transform)
+    xform = xform.scaled(Vector3.ONE * scale_factor)
+    xform.origin *= 1 / scale_factor
+    multimesh.set_instance_transform(i, xform)

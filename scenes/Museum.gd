@@ -115,7 +115,7 @@ func _set_custom_door(title):
     _custom_door.to_title = title
     _custom_door.entry_door.set_open(true)
 
-func _reset_custom_door(title):
+func _reset_custom_door(_title):
   if _custom_door and is_instance_valid(_custom_door):
     _custom_door.entry_door.set_open(false)
 
@@ -323,7 +323,7 @@ func _count_image_items(arr):
       count += 1
   return count
 
-func _on_exit_added(exit, doors, backlink, new_exhibit, hall):
+func _on_exit_added(exit, doors, backlink, _new_exhibit, hall):
   var linked_exhibit = Util.coalesce(doors.pop_front(), "")
   exit.to_title = linked_exhibit
   exit.loader.body_entered.connect(_on_loader_body_entered.bind(exit))
@@ -361,7 +361,7 @@ func _on_fetch_complete(_titles, context):
 
   ItemProcessor.create_items(context.title, result, prev_title)
 
-  var data
+  var data = null
   while not data:
     data = await ItemProcessor.items_complete
     if data.title != context.title:
@@ -381,7 +381,7 @@ func _on_fetch_complete(_titles, context):
     "min_room_dimension": min_room_dimension,
     "max_room_dimension": max_room_dimension,
     "room_count": max(
-      len(items) / items_per_room_estimate,
+      float(len(items)) / items_per_room_estimate,
       min_rooms_per_exhibit
     ),
     "title": context.title,

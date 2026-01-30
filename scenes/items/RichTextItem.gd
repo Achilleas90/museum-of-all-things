@@ -3,7 +3,7 @@ extends Node3D
 static var margin_top = 100
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
   pass
 
 func init(text):

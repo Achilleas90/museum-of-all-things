@@ -4,7 +4,6 @@ class_name HallDoor
 static var animation_duration = 0.25
 
 @onready var _door = $Door
-@onready var _open = false
 var _open_pos = Vector3(0, 6.5, 0)
 var _closed_pos = Vector3(0, 2, 0)
 
@@ -18,21 +17,21 @@ func open():
 func close():
   set_open(false)
 
-func set_open(open = true, instant = false):
+func set_open(is_open = true, instant = false):
   if is_visible() and not instant:
     var tween = get_tree().create_tween()
     tween.tween_property(
       _door,
       "position",
-      _open_pos if open else _closed_pos,
+      _open_pos if is_open else _closed_pos,
       animation_duration
     )
     tween.set_trans(Tween.TRANS_LINEAR)
     tween.set_ease(Tween.EASE_IN_OUT)
-    if open:
+    if is_open:
       $OpenSound.play()
   else:
-    _door.position = _open_pos if open else _closed_pos
+    _door.position = _open_pos if is_open else _closed_pos
 
 @onready var label_pivot = $Door/LabelPivot
 @onready var top_label = $Door/LabelPivot/Label1
@@ -62,5 +61,5 @@ func set_message(msg, instant = false):
   bottom_label = tmp
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
   pass

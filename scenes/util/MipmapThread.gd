@@ -21,7 +21,7 @@ func _thread_loop():
   while not WorkQueue.get_quitting():
     _mipmap_process_item()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
   if not Util.is_using_threads():
     _mipmap_process_item()
 
@@ -61,15 +61,23 @@ func _get_texture_data_rd(texture: Texture2D, callback: Callable):
   )
 
 func get_viewport_texture_with_mipmaps(subviewport: SubViewport, callback: Callable):
+  if not subviewport.is_inside_tree():
+    await subviewport.tree_entered
   await RenderingServer.frame_post_draw
+  var viewport_texture = subviewport.get_texture()
+  if viewport_texture == null:
+    await RenderingServer.frame_post_draw
+    viewport_texture = subviewport.get_texture()
+  if viewport_texture == null:
+    return
   if Util.is_compatibility_renderer():
     WorkQueue.add_item(MIPMAP_QUEUE, {
       "type": "get_texture_data",
-      "texture": subviewport.get_texture(),
+      "texture": viewport_texture,
       "callback": callback,
     })
   else:
-    _get_texture_data_rd(subviewport.get_texture(), callback)
+    _get_texture_data_rd(viewport_texture, callback)
 
 func _create_image(width, height, format, data, callback) -> void:
   WorkQueue.add_item(MIPMAP_QUEUE, {

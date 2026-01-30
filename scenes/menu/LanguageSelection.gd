@@ -26,7 +26,7 @@ func _on_language_item_selected(index: int) -> void:
   var locale = _languages[index]
   LanguageManager.set_locale(locale)
 
-func _on_set_language(language: String) -> void:
-  var idx = _languages.find(language)
+func _on_set_language(language_code: String) -> void:
+  var idx = _languages.find(language_code)
   if idx >= 0 and selected != idx:
     select(idx)

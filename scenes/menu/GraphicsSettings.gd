@@ -117,9 +117,9 @@ func _update_scaling():
 
   GraphicsManager.set_fsr_quality(fsr_quality.selected)
 
-  var scale = get_viewport().scaling_3d_scale
-  _vbox.get_node("DisplayOptions/RenderScale").value = scale
-  _vbox.get_node("DisplayOptions/RenderScaleValue").text = "%.0f %%\n" % (scale * 100)
+  var render_scale = get_viewport().scaling_3d_scale
+  _vbox.get_node("DisplayOptions/RenderScale").value = render_scale
+  _vbox.get_node("DisplayOptions/RenderScaleValue").text = "%.0f %%\n" % (render_scale * 100)
 
 func _on_render_scale_value_changed(value: float):
   _vbox.get_node("DisplayOptions/RenderScaleValue").text = "%d %%\n" % (value * 100)
@@ -134,7 +134,7 @@ func _on_scale_mode_value_changed(value: int):
 
   _update_scaling()
 
-func _on_fsr_quality_item_selected(index: int) -> void:
+func _on_fsr_quality_item_selected(_index: int) -> void:
   _update_scaling()
 
 func _on_sharpness_scale_value_changed(value: float) -> void:

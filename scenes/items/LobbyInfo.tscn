@@ -13,9 +13,6 @@
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_pkvds"]
 points = PackedVector3Array(-0.875, 0, -0.1, -0.875, 0, 0.1, -0.875, 3, -0.1, 0.875, 0, -0.1, 0.875, 0, 0.1, -0.875, 3, 0.1, 0.875, 3, -0.1, 0.875, 3, 0.1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ty80d"]
-viewport_path = NodePath("SubViewport")
-
 [node name="LobbyInfo" type="MeshInstance3D"]
 mesh = ExtResource("1_eagnn")
 surface_material_override/0 = ExtResource("2_ggvd3")
@@ -48,7 +45,6 @@ pixel_size = 0.002
 shaded = true
 double_sided = false
 texture_filter = 5
-texture = SubResource("ViewportTexture_ty80d")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 disable_3d = true

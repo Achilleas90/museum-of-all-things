@@ -1,10 +1,9 @@
 extends Node
 
+@warning_ignore("unused_signal")
 signal loaded_image(url: String, image: Image)
 
 @onready var COMMON_HEADERS = [ "accept: image/png, image/jpeg; charset=utf-8" ]
-@onready var _in_flight = {}
-@onready var _xr = Util.is_xr()
 
 var TEXTURE_QUEUE = "Textures"
 var TEXTURE_FRAME_PACING = 6
@@ -39,7 +38,7 @@ func _texture_load_thread_loop():
   while not WorkQueue.get_quitting():
     _texture_load_item()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
   if not Util.is_using_threads():
     _texture_load_item()
 
@@ -62,9 +61,9 @@ func _texture_load_item():
             if result[0] != OK:
               push_error("failed to fetch image ", result[1], " ", item.url)
             else:
-              data = result[3]
-              _write_url(item.url, data)
-              _load_image(item.url, data, item.ctx)
+              var response_data = result[3]
+              _write_url(item.url, response_data)
+              _load_image(item.url, response_data, item.ctx)
 
           if Util.is_web():
             RequestSync.request_async(request_url, COMMON_HEADERS).completed.connect(handle_result)

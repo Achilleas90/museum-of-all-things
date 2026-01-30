@@ -15,6 +15,7 @@ const THUMBSTICK_TELEPORT_ACTION = "thumbstick_up"
 
 const THUMBSTICK_TELEPORT_PRESSED_THRESHOLD := 0.8
 const THUMBSTICK_TELEPORT_RELEASED_THRESHOLD := 0.4
+const USER_SETTINGS_SCRIPT = preload("res://addons/godot-xr-tools/user_settings/user_settings.gd")
 
 var _thumbstick_teleport_pressed := false
 
@@ -64,7 +65,7 @@ func _on_webxr_primary_changed(webxr_primary: int):
   if webxr_primary == 0:
     webxr_primary = XRToolsUserSettings.WebXRPrimary.THUMBSTICK
 
-  var action_name = XRToolsUserSettings.get_webxr_primary_action(webxr_primary)
+  var action_name = USER_SETTINGS_SCRIPT.get_webxr_primary_action(webxr_primary)
   %XRToolsMovementDirect.input_action = action_name
   %XRToolsMovementTurn.input_action = action_name
 
@@ -103,7 +104,7 @@ func _show_menu():
   right_controller.get_node("XrMenu").enable_collision()
   right_controller.get_node("XrMenu").visible = true
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
   $XROrigin3D/XRToolsPlayerBody/FootstepPlayer.set_on_floor($XROrigin3D/XRToolsPlayerBody.is_on_floor())
 
 func _toggle_menu() -> void:
@@ -112,7 +113,7 @@ func _toggle_menu() -> void:
   else:
     _hide_menu()
 
-func _on_xr_controller_3d_left_input_vector2_changed(name: String, value: Vector2) -> void:
+func _on_xr_controller_3d_left_input_vector2_changed(_name: String, value: Vector2) -> void:
   var xr_tracker: XRPositionalTracker = XRServer.get_tracker(left_controller.tracker)
 
   if _thumbstick_teleport_pressed:
@@ -125,21 +126,21 @@ func _on_xr_controller_3d_left_input_vector2_changed(name: String, value: Vector
       _thumbstick_teleport_pressed = true
       xr_tracker.set_input(THUMBSTICK_TELEPORT_ACTION, true)
 
-func _on_xr_controller_3d_left_button_pressed(name: String) -> void:
-  if not _thumbstick_teleport_pressed and name == TRIGGER_TELEPORT_ACTION:
+func _on_xr_controller_3d_left_button_pressed(action_name: String) -> void:
+  if not _thumbstick_teleport_pressed and action_name == TRIGGER_TELEPORT_ACTION:
     var xr_tracker: XRPositionalTracker = XRServer.get_tracker(left_controller.tracker)
     xr_tracker.set_input(THUMBSTICK_TELEPORT_ACTION, true)
-  elif name in ["menu_button", "by_button"]:
+  elif action_name in ["menu_button", "by_button"]:
     _toggle_menu()
 
-func _on_xr_controller_3d_left_button_released(name: String) -> void:
-  if not _thumbstick_teleport_pressed and name == TRIGGER_TELEPORT_ACTION:
+func _on_xr_controller_3d_left_button_released(action_name: String) -> void:
+  if not _thumbstick_teleport_pressed and action_name == TRIGGER_TELEPORT_ACTION:
     var xr_tracker: XRPositionalTracker = XRServer.get_tracker(left_controller.tracker)
     xr_tracker.set_input(THUMBSTICK_TELEPORT_ACTION, false)
 
-func _on_xr_controller_3d_right_button_pressed(name: String) -> void:
-  if name == "by_button":
+func _on_xr_controller_3d_right_button_pressed(action_name: String) -> void:
+  if action_name == "by_button":
     _toggle_menu()
 
-func _on_xr_controller_3d_right_button_released(name: String) -> void:
+func _on_xr_controller_3d_right_button_released(_action_name: String) -> void:
   pass

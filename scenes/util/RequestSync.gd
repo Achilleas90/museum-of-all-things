@@ -55,6 +55,7 @@ func request(url, headers=COMMON_HEADERS, verbose=true):
   return [OK, response_code, response_headers, response]
 
 class ResponseAsync:
+  @warning_ignore("unused_signal")
   signal completed (result)
 
 func request_async(url, headers=COMMON_HEADERS, verbose=true):

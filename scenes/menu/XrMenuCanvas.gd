@@ -5,7 +5,7 @@ func _ready() -> void:
   pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
   pass
 
 func _on_pause_menu_return_to_lobby() -> void:

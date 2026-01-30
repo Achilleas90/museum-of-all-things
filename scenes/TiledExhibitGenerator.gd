@@ -44,7 +44,7 @@ func _rand_dim():
 func _ready() -> void:
   pass # Replace with function body.
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
   pass
 
 const FLOOR_WOOD = 0
@@ -260,7 +260,7 @@ func _create_hall_bounds(last_room, next_room):
 
   return [start_hall, end_hall]
 
-func decorate_entry(starting_hall, room_obj):
+func decorate_entry(starting_hall, _room_obj):
   var free_wall_pos = starting_hall.to_pos + 2 * starting_hall.to_dir
   var free_wall_ori = Util.vecToOrientation(_grid, starting_hall.to_dir.rotated(Vector3.UP, PI / 2))
   _grid.set_cell_item(free_wall_pos, FREE_WALL, free_wall_ori)
@@ -330,7 +330,7 @@ func decorate_room_center(center, width, length):
     elif roll == 1:
       var planter = planter_scene.instantiate()
       planter.position = Util.gridToWorld(true_center)
-      planter.rotation.y = PI / 2 if length > width else 0
+      planter.rotation.y = PI / 2 if length > width else 0.0
       add_child(planter)
       return
 
