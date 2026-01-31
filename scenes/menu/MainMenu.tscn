@@ -1,14 +1,136 @@
-[gd_scene load_steps=6 format=3 uid="uid://3q5n8txx3jmm"]
+[gd_scene format=3 uid="uid://3q5n8txx3jmm"]
 
 [ext_resource type="Script" uid="uid://dvi1pswxc3j03" path="res://scenes/menu/MainMenu.gd" id="1_cmhx0"]
 [ext_resource type="Theme" uid="uid://dgt5fjkytx07d" path="res://assets/resources/menu_theme.tres" id="1_dwey2"]
 [ext_resource type="Texture2D" uid="uid://dgfyxj62mioye" path="res://assets/logo/moat_logo_large_funky.png" id="3_vuiv8"]
 [ext_resource type="PackedScene" uid="uid://cv3acpc23tjw0" path="res://scenes/menu/LanguageSelection.tscn" id="4_2nud1"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_46gfj"]
-font_size = 64
+[sub_resource type="Gradient" id="Gradient_2xw8d"]
+offsets = PackedFloat32Array(0, 0.65, 1)
+colors = PackedColorArray(0.07, 0.06, 0.05, 1, 0.12, 0.12, 0.1, 1, 0.2, 0.19, 0.16, 1)
 
-[node name="MainMenu" type="Control"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p5xks"]
+gradient = SubResource("Gradient_2xw8d")
+width = 1
+height = 512
+
+[sub_resource type="LabelSettings" id="LabelSettings_subtitle"]
+font_size = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_normal"]
+content_margin_left = 28.0
+content_margin_top = 14.0
+content_margin_right = 28.0
+content_margin_bottom = 14.0
+bg_color = Color(0.78, 0.62, 0.33, 1)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 26
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_pressed"]
+content_margin_left = 28.0
+content_margin_top = 14.0
+content_margin_right = 28.0
+content_margin_bottom = 14.0
+bg_color = Color(0.66, 0.52, 0.28, 1)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 26
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_hover"]
+content_margin_left = 28.0
+content_margin_top = 14.0
+content_margin_right = 28.0
+content_margin_bottom = 14.0
+bg_color = Color(0.86, 0.72, 0.4, 1)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 26
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_primary_focus"]
+content_margin_left = 28.0
+content_margin_top = 14.0
+content_margin_right = 28.0
+content_margin_bottom = 14.0
+bg_color = Color(0.82, 0.68, 0.37, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.92, 0.7, 1)
+corner_radius_top_left = 26
+corner_radius_top_right = 26
+corner_radius_bottom_right = 26
+corner_radius_bottom_left = 26
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_normal"]
+content_margin_left = 24.0
+content_margin_top = 10.0
+content_margin_right = 24.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.82, 0.72, 0.35)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_pressed"]
+content_margin_left = 24.0
+content_margin_top = 10.0
+content_margin_right = 24.0
+content_margin_bottom = 10.0
+bg_color = Color(0.16, 0.14, 0.1, 0.7)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.82, 0.7, 0.4, 0.9)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_hover"]
+content_margin_left = 24.0
+content_margin_top = 10.0
+content_margin_right = 24.0
+content_margin_bottom = 10.0
+bg_color = Color(0.2, 0.17, 0.12, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.82, 0.58, 0.8)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_secondary_focus"]
+content_margin_left = 24.0
+content_margin_top = 10.0
+content_margin_right = 24.0
+content_margin_bottom = 10.0
+bg_color = Color(0.18, 0.16, 0.12, 0.7)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.9, 0.7, 1)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+
+[node name="MainMenu" type="Control" unique_id=1618714241]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +139,28 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cmhx0")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=85549920]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_p5xks")
+stretch_mode = 1
+
+[node name="Vignette" type="ColorRect" parent="." unique_id=66969844]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.2)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1416605611]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,54 +168,111 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_dwey2")
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 100
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 100
+theme_override_constants/margin_left = 72
+theme_override_constants/margin_top = 72
+theme_override_constants/margin_right = 72
+theme_override_constants/margin_bottom = 72
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=744201488]
 layout_mode = 2
+theme_override_constants/separation = 56
+
+[node name="LeftColumn" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=1295889654]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
 alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
-z_index = 1
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftColumn" unique_id=1898382167]
 layout_mode = 2
 texture = ExtResource("3_vuiv8")
 stretch_mode = 3
 
-[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="Subtitle" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn" unique_id=1976520312]
 layout_mode = 2
-text = " "
-label_settings = SubResource("LabelSettings_46gfj")
+text = "A quiet walk through Wikipedia's living halls."
+label_settings = SubResource("LabelSettings_subtitle")
+autowrap_mode = 3
 
-[node name="Start" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="RightWrapper" type="CenterContainer" parent="MarginContainer/HBoxContainer" unique_id=1377743384]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RightColumn" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightWrapper" unique_id=1990139746]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Start" type="Button" parent="MarginContainer/HBoxContainer/RightWrapper/RightColumn" unique_id=1646475462]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.12, 0.09, 0.05, 1)
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_primary_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_primary_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_primary_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_primary_focus")
 text = "Enter the Museum"
 
-[node name="StartWebXR" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="StartWebXR" type="Button" parent="MarginContainer/HBoxContainer/RightWrapper/RightColumn" unique_id=1846636450]
 unique_name_in_owner = true
 visible = false
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.12, 0.09, 0.05, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_primary_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_primary_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_primary_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_primary_focus")
 text = "Enter the Museum in VR (WebXR)"
 
-[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Settings" type="Button" parent="MarginContainer/HBoxContainer/RightWrapper/RightColumn" unique_id=312886693]
+custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.92, 0.9, 0.84, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_secondary_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_secondary_focus")
 text = "Settings"
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="MarginContainer/HBoxContainer/RightWrapper/RightColumn" unique_id=1489356827]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 46)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.92, 0.9, 0.84, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_secondary_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_secondary_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_secondary_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_secondary_focus")
 text = "Quit"
 
-[node name="Language" parent="MarginContainer/VBoxContainer" instance=ExtResource("4_2nud1")]
-layout_mode = 2
+[node name="Language" parent="." unique_id=2133161581 instance=ExtResource("4_2nud1")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -188.0
+offset_bottom = 40.0
+grow_horizontal = 0
 
-[node name="FadeIn" type="ColorRect" parent="."]
+[node name="FadeIn" type="ColorRect" parent="." unique_id=1955002755]
 z_index = 2
 layout_mode = 1
 anchors_preset = 15
@@ -83,7 +283,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
-[node name="FadeInStage2" type="ColorRect" parent="."]
+[node name="FadeInStage2" type="ColorRect" parent="." unique_id=898346561]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +294,7 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0)
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="button_up" from="MarginContainer/VBoxContainer/StartWebXR" to="." method="_on_start_web_xr_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/RightWrapper/RightColumn/Start" to="." method="_on_start_pressed"]
+[connection signal="button_up" from="MarginContainer/HBoxContainer/RightWrapper/RightColumn/StartWebXR" to="." method="_on_start_web_xr_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/RightWrapper/RightColumn/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/RightWrapper/RightColumn/Quit" to="." method="_on_quit_button_pressed"]

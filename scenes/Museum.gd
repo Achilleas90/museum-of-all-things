@@ -16,6 +16,7 @@ var _lobby_data_path = "res://assets/resources/lobby_data.tres"
 @onready var _current_room_title = "$Lobby"
 @export var items_per_room_estimate = 7
 @export var min_rooms_per_exhibit = 2
+@export var max_commons_images: int = 20
 
 var _starting_height = 40
 var _height_increment = 20
@@ -172,11 +173,15 @@ func _prepare_halls_for_teleport(from_hall, to_hall, entry_to_exit=false):
   timer.start(HallDoor.animation_duration)
 
 func _toggle_exhibit_visibility(hide_title: String, show_title: String) -> void:
-  var old_exhibit = _exhibits[hide_title]['exhibit']
-  old_exhibit.visible = false
+  if _exhibits.has(hide_title):
+    var old_entry = _exhibits[hide_title]
+    if old_entry.has("exhibit") and is_instance_valid(old_entry.exhibit):
+      old_entry.exhibit.visible = false
 
-  var new_exhibit = _exhibits[show_title]['exhibit']
-  new_exhibit.visible = true
+  if _exhibits.has(show_title):
+    var new_entry = _exhibits[show_title]
+    if new_entry.has("exhibit") and is_instance_valid(new_entry.exhibit):
+      new_entry.exhibit.visible = true
 
 func _teleport_player(from_hall, to_hall, entry_to_exit=false):
   var valid_hall = from_hall if is_instance_valid(from_hall) else (to_hall if is_instance_valid(to_hall) else null)
@@ -463,6 +468,8 @@ func _on_wikidata_complete(entity, ctx):
 
 func _on_commons_images_complete(images, ctx):
   if len(images) > 0:
+    if len(images) > max_commons_images:
+      images = images.slice(0, max_commons_images)
     var item_data = ItemProcessor.commons_images_to_items(ctx.title, images, ctx.extra_text)
     for item in item_data:
       _queue_item(ctx.title, _add_item.bind(

@@ -3,8 +3,8 @@ extends Control
 signal resume
 
 @onready var _xr = Util.is_xr()
-@onready var _vbox = $ScrollContainer/MarginContainer/VBoxContainer/MarginContainer
-@onready var _tab_bar = $ScrollContainer/MarginContainer/VBoxContainer/TabBar
+@onready var _vbox = $ContentCard/ScrollContainer/MarginContainer/VBoxContainer/MarginContainer
+@onready var _tab_bar = $ContentCard/ScrollContainer/MarginContainer/VBoxContainer/TabBar
 @onready var _tab_scenes = [
   _vbox.get_node("GraphicsSettings"),
   _vbox.get_node("AudioSettings"),

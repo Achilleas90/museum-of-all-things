@@ -37,6 +37,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.501961)
+mouse_filter = 2
 
 [node name="Settings" parent="CanvasLayer" unique_id=1109931955 instance=ExtResource("4_31ns1")]
 visible = false

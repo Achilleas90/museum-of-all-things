@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var gravity = -30
+var gravity = -20
 var crouch_move_speed = 4
 var mouse_sensitivity = 0.002
 var joy_sensitivity = 0.025
@@ -115,11 +115,11 @@ func _physics_process(delta):
     input = input.normalized()
   else:
     input = Input.get_vector("strafe_left", "strafe_right", "move_forward", "move_back", input_deadzone)
-  var basis := global_transform.basis
-  var forward := -basis.z
+  var _basis: Basis = $Pivot.global_transform.basis
+  var forward: Vector3 = -_basis.z
   forward.y = 0.0
   forward = forward.normalized()
-  var right := basis.x
+  var right: Vector3 = _basis.x
   right.y = 0.0
   right = right.normalized()
   var desired_velocity = (right * input.x + forward * -input.y) * speed
@@ -135,15 +135,15 @@ func _physics_process(delta):
   #var delta_vec = Input.get_vector("camera_left", "camera_right", "camera_up", "camera_down")
   var delta_vec = Vector2(-Input.get_joy_axis(0, _joy_right_x), -Input.get_joy_axis(0, _joy_right_y))
   if delta_vec.length() > joy_deadzone:
-    rotate_y(delta_vec.x * joy_sensitivity)
-    $Pivot.rotate_x(delta_vec.y * joy_sensitivity)
+    rotate_y(delta_vec.x * joy_sensitivity * delta)
+    $Pivot.rotate_x(delta_vec.y * joy_sensitivity * delta)
     $Pivot.rotation.x = clamp($Pivot.rotation.x, min_pitch, max_pitch)
 
   if smooth_movement:
-    rotate_y(camera_v.y)
-    $Pivot.rotate_x(camera_v.x)
+    rotate_y(camera_v.y * delta)
+    $Pivot.rotate_x(camera_v.x * delta)
     $Pivot.rotation.x = clamp($Pivot.rotation.x, min_pitch, max_pitch)
-    camera_v *= 0.95
+    camera_v *= pow(0.05, delta)
 
   $FootstepPlayer.set_on_floor(is_on_floor())
 

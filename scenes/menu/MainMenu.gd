@@ -4,8 +4,8 @@ signal start
 signal start_webxr
 signal settings
 
-var fade_in_start = Color(0.0, 0.0, 0.0, 1.0)
-var fade_in_end = Color(0.0, 0.0, 0.0, 0.0)
+var fade_in_start: Color = Color(0.0, 0.0, 0.0, 1.0)
+var fade_in_end: Color = Color(0.0, 0.0, 0.0, 0.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,18 +15,18 @@ func _ready() -> void:
   if Util.is_web():
     %Quit.visible = false
 
-func _on_visibility_changed():
+func _on_visibility_changed() -> void:
   if visible and is_inside_tree():
     call_deferred("_grab_start_focus")
 
 func _grab_start_focus() -> void:
   if visible and is_inside_tree():
-    $MarginContainer/VBoxContainer/Start.grab_focus()
+    $MarginContainer/HBoxContainer/RightWrapper/RightColumn/Start.grab_focus()
 
-func set_webxr_enabled(p_enabled):
+func set_webxr_enabled(p_enabled: bool) -> void:
   %StartWebXR.visible = p_enabled
 
-func _start_fade_in():
+func _start_fade_in() -> void:
   $FadeIn.color = fade_in_start
   $FadeInStage2.color = fade_in_start
   var tween = get_tree().create_tween()
@@ -35,16 +35,16 @@ func _start_fade_in():
   tween.set_trans(Tween.TRANS_LINEAR)
   tween.set_ease(Tween.EASE_IN_OUT)
 
-func _on_start_pressed():
+func _on_start_pressed() -> void:
   emit_signal("start")
 
 func _on_start_web_xr_pressed() -> void:
   emit_signal("start_webxr")
 
-func _on_settings_pressed():
+func _on_settings_pressed() -> void:
   emit_signal("settings")
 
-func _on_quit_button_pressed():
+func _on_quit_button_pressed() -> void:
   get_tree().quit()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

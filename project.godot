@@ -43,7 +43,7 @@ LanguageManager="*res://scenes/util/LanguageManager.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=800
-window/subwindows/embed_subwindows=false
+window/subwindows/embed_subwindows=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -228,8 +228,8 @@ tls/certificate_bundle_override="res://assets/certs/cacert.crt"
 
 [physics]
 
-common/enable_pause_aware_picking=true
 common/physics_interpolation=true
+common/enable_pause_aware_picking=true
 
 [rendering]
 

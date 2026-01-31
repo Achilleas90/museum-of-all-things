@@ -130,24 +130,28 @@ func _close_menus():
 
 func _open_settings_menu():
   _close_menus()
+  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   $CanvasLayer.visible = true
   $CanvasLayer/Settings.visible = true
   $CrosshairLayer/CrosshairDot.visible = false
 
 func _open_main_menu():
   _close_menus()
+  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   $CanvasLayer.visible = true
   $CanvasLayer/MainMenu.visible = true
   $CrosshairLayer/CrosshairDot.visible = false
 
 func _open_pause_menu():
   _close_menus()
+  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   $CanvasLayer.visible = true
   $CanvasLayer/PauseMenu.visible = true
   $CrosshairLayer/CrosshairDot.visible = false
 
 func _open_terminal_menu():
   _close_menus()
+  Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   $CanvasLayer.visible = true
   $CanvasLayer/PopupTerminalMenu.visible = true
   $CrosshairLayer/CrosshairDot.visible = false
@@ -208,6 +212,9 @@ func _input(event):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+  if $CanvasLayer.visible and not Util.is_xr():
+    if Input.get_mouse_mode() != Input.MOUSE_MODE_VISIBLE:
+      Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
   $FpsLabel.text = str(Engine.get_frames_per_second())
 
 func _webxr_session_supported(session_mode, supported):

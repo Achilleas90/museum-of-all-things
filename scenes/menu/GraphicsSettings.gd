@@ -1,10 +1,10 @@
 extends VBoxContainer
 
 signal resume
-@onready var _vbox = self
-@onready var _xr = Util.is_xr()
-@onready var post_processing_options = ["none", "crt"]
-var _loaded_settings = false
+@onready var _vbox: VBoxContainer = self
+@onready var _xr: bool = Util.is_xr()
+@onready var post_processing_options: Array[String] = ["none", "crt"]
+var _loaded_settings: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,7 +32,7 @@ func _on_visibility_changed():
     GraphicsManager.save_settings()
 
 func _load_settings():
-  var e = GraphicsManager.get_env()
+  var e: Environment = GraphicsManager.get_env()
   _loaded_settings = true
 
   _vbox.get_node("RenderDistanceOptions/RenderDistance").value = GraphicsManager.render_distance_multiplier
@@ -49,8 +49,8 @@ func _load_settings():
   _vbox.get_node("LightOptions/AmbientLight").value = e.ambient_light_energy
   _vbox.get_node("LightOptions/EnableSSIL").button_pressed = e.ssil_enabled
   _vbox.get_node("FogOptions/EnableFog").button_pressed = e.fog_enabled
-  var post_processing = GraphicsManager.post_processing
-  var idx = post_processing_options.find(post_processing)
+  var post_processing: String = GraphicsManager.post_processing
+  var idx: int = post_processing_options.find(post_processing)
   _vbox.get_node("PostProcessingOptions/PostProcessingEffect").select(idx if idx >= 0 else 0)
 
   _update_scaling()
@@ -95,7 +95,7 @@ func _on_fullscreen_toggled(toggled_on: bool):
   _vbox.get_node("DisplayOptions/Fullscreen").set_pressed_no_signal(toggled_on)
 
 func _update_scaling():
-  var scale_mode = _vbox.get_node("DisplayOptions/ScaleMode").selected
+  var scale_mode: int = _vbox.get_node("DisplayOptions/ScaleMode").selected
   GraphicsManager.set_scale_mode(scale_mode)
 
   # Show render scale if bilinear, FSR options otherwise
@@ -107,7 +107,7 @@ func _update_scaling():
     return
 
   # FSR
-  var fsr_quality = _vbox.get_node("DisplayOptions/FSRQuality")
+  var fsr_quality: OptionButton = _vbox.get_node("DisplayOptions/FSRQuality")
   if scale_mode == 1:  # FSR 1 has no "ultra performance"
     fsr_quality.set_item_disabled(0, false)
     fsr_quality.set_item_disabled(4, true)
@@ -117,7 +117,7 @@ func _update_scaling():
 
   GraphicsManager.set_fsr_quality(fsr_quality.selected)
 
-  var render_scale = get_viewport().scaling_3d_scale
+  var render_scale: float = get_viewport().scaling_3d_scale
   _vbox.get_node("DisplayOptions/RenderScale").value = render_scale
   _vbox.get_node("DisplayOptions/RenderScaleValue").text = "%.0f %%\n" % (render_scale * 100)
 
@@ -144,9 +144,9 @@ func _on_sharpness_scale_value_changed(value: float) -> void:
 func _on_pause_menu_settings() -> void:
   pass # Replace with function body.
 
-func _on_post_processing_effect_item_selected(index: int):
+func _on_post_processing_effect_item_selected(index: int) -> void:
   GraphicsManager.set_post_processing(post_processing_options[index])
 
-func _on_render_distance_value_changed(value: float):
+func _on_render_distance_value_changed(value: float) -> void:
   $RenderDistanceOptions/RenderDistanceValue.text = "%dm" % int(value * 30)
   GraphicsManager.set_render_distance_multiplier(value)

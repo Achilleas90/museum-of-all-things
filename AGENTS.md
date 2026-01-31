@@ -11,12 +11,14 @@
 
 ## Build, Test, and Development Commands
 - Open `project.godot` in the Godot editor (4.6.x) and press Play to run locally.
+- After working with the `godot` command, always run tests before finishing.
 - Use the Export presets in `export_presets.cfg` to build platform exports from the editor.
 - There is no documented CLI build pipeline; if you add one, keep it in `docs/` and update this file.
 
 ## Coding Style & Naming Conventions
 - GDScript uses 2-space indentation. Set Godot to **Spaces, size 2**.
 - `.editorconfig` enforces 2-space indentation for `*.gd` files.
+- Avoid `:=` in GDScript; declare types explicitly instead.
 - Use `snake_case` for variables/functions, `PascalCase` for `class_name` declarations (e.g., `class_name Hall`).
 - Keep scene and script names paired and descriptive (e.g., `scenes/Hall.tscn` + `scenes/Hall.gd`).
 
